@@ -1,0 +1,53 @@
+name: Unit tests
+
+on:
+  push:
+    branches:
+      - master
+      - next
+  pull_request:
+    branches:
+      - master
+      - next
+
+jobs:
+  test-node:
+    name: Test on Node.js v${{ matrix.node-version }} and Jest v${{ matrix.jest-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [24.x, 23.x, 22.x, 20.x]
+        jest-version: [30.x]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - name: install with jest v${{ matrix.jest-version }}
+        run: |
+          npm install --save-dev jest@${{ matrix.jest-version }} babel-jest@${{ matrix.jest-version }}
+          npm install
+      - name: run tests
+        run: NODE_OPTIONS="$NODE_OPTIONS --experimental-vm-modules" npm test
+  test-os:
+    name: Test on ${{ matrix.os }} using Node.js LTS
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: install
+        run: npm install
+      - name: run tests
+        run: NODE_OPTIONS="$NODE_OPTIONS --experimental-vm-modules" npm test
