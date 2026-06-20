@@ -22,6 +22,8 @@ module.exports = {
     JEST_JUNIT_TEST_CASE_PROPERTIES_DIR: 'testCasePropertiesDirectory',
     JEST_JUNIT_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile',
     JEST_JUNIT_TEST_SUITE_PROPERTIES_DIR: 'testSuitePropertiesDirectory',
+    JEST_JUNIT_OUTPUT_FORMAT: 'outputFormat',
+    JEST_JUNIT_DRY_RUN: 'dryRun',
   },
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',
@@ -43,6 +45,8 @@ module.exports = {
     testCasePropertiesDirectory: process.cwd(),
     testSuitePropertiesFile: 'junitProperties.js',
     testSuitePropertiesDirectory: process.cwd(),
+    outputFormat: 'junit',
+    dryRun: 'false',
   },
   SUITENAME_VAR: 'suitename',
   CLASSNAME_VAR: 'classname',

@@ -27,39 +27,39 @@ describe('buildJsonResults', () => {
     jsonResults = undefined;
   });
 
-  it('should contain number of tests in testSuite', () => {
+  it('should contain number of tests in testSuite', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[1].testsuite[0]._attr.tests).toBe(1);
   });
 
-  it('should contain number of tests in testSuites', () => {
+  it('should contain number of tests in testSuites', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[0]._attr.tests).toBe(1);
   });
 
-  it('should return the proper name from ancestorTitles when usePathForSuiteName is "false"', () => {
+  it('should return the proper name from ancestorTitles when usePathForSuiteName is "false"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('foo');
   });
 
-  it('should return the proper filename when suiteNameTemplate is "{filename}"', () => {
+  it('should return the proper filename when suiteNameTemplate is "{filename}"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{filename}"
       }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('foo.test.js');
   });
 
-  it('should support suiteNameTemplate as function', () => {
+  it('should support suiteNameTemplate as function', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: (vars) => {
           return 'function called with vars: ' + Object.keys(vars).join(', ');
@@ -69,9 +69,9 @@ describe('buildJsonResults', () => {
       .toBe('function called with vars: filepath, filename, title, displayName');
   });
 
-  it('should return the proper classname when classNameTemplate is "{classname}"', () => {
+  it('should return the proper classname when classNameTemplate is "{classname}"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{classname}"
         }));
@@ -79,9 +79,9 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo baz');
   });
 
-  it('should return the proper title when classNameTemplate is "{title}"', () => {
+  it('should return the proper title when classNameTemplate is "{title}"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{title}"
         }));
@@ -89,9 +89,9 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('should bar');
   });
 
-  it('should return the proper filepath when classNameTemplate is "{filepath}"', () => {
+  it('should return the proper filepath when classNameTemplate is "{filepath}"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{filepath}"
         }));
@@ -99,9 +99,9 @@ describe('buildJsonResults', () => {
     expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
-  it('should return the proper filename when classNameTemplate is "{filename}"', () => {
+  it('should return the proper filename when classNameTemplate is "{filename}"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         classNameTemplate: "{filename}"
       }));
@@ -109,10 +109,10 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo.test.js');
   });
 
-  it('should return the proper displayName when classNameTemplate is {displayName}', () => {
+  it('should return the proper displayName when classNameTemplate is {displayName}', async () => {
     const multiProjectNoFailingTestsReport = require('../__mocks__/multi-project-no-failing-tests.json');
 
-    jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(multiProjectNoFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{displayName}"
         }));
@@ -120,9 +120,9 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('project1');
   });
 
-  it('should return the proper suitename when classNameTemplate is "{suitename}"', () => {
+  it('should return the proper suitename when classNameTemplate is "{suitename}"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{suitename}"
         }));
@@ -130,9 +130,9 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo');
   });
 
-  it('should support return the function result when classNameTemplate is a function', () => {
+  it('should support return the function result when classNameTemplate is a function', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         classNameTemplate: (vars) => {
           return 'function called with vars: ' + Object.keys(vars).join(', ');
@@ -142,10 +142,10 @@ describe('buildJsonResults', () => {
       .toBe('function called with vars: filepath, filename, suitename, classname, title, displayName');
   });
 
-  it('should report no results as error', () => {
+  it('should report no results as error', async () => {
     const failingTestsReport = require('../__mocks__/failing-compilation.json');
 
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true"
         }));
@@ -167,10 +167,10 @@ describe('buildJsonResults', () => {
 
   });
 
-  it('should report failureMessage if testExecErrorNotSet', () => {
+  it('should report failureMessage if testExecErrorNotSet', async () => {
     const failingTestsReport = require('../__mocks__/failing-import.json');
 
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true"
         }));
@@ -181,10 +181,10 @@ describe('buildJsonResults', () => {
     expect(errorSuite.testcase[1].error).toContain("Cannot find module './mult'");
   });
 
-  it('should include a failing testcase from a suite with passing testcases but a failure from "testExecError" ', () => {
+  it('should include a failing testcase from a suite with passing testcases but a failure from "testExecError" ', async () => {
     const failingTestsReport = require('../__mocks__/no-failing-tests-with-testexec-failure.json');
 
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {}));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[3];
@@ -192,20 +192,20 @@ describe('buildJsonResults', () => {
     expect(errorSuite.testcase[1].failure).toContain("beforeAll has crashed");
   });
 
-  it('should not include a failing testcase from a suite with passing testcases but a null value from "testExecError" ', () => {
+  it('should not include a failing testcase from a suite with passing testcases but a null value from "testExecError" ', async () => {
     const notFailingTestsReport = require('../__mocks__/no-failing-tests-with-testexec-null.json');
 
-    jsonResults = buildJsonResults(notFailingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(notFailingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {}));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase.length).toBe(1);
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name).toEqual('foo baz should bar');
   });
 
-  it('should report empty suites as error', () => {
+  it('should report empty suites as error', async () => {
     const failingTestsReport = require('../__mocks__/empty-suite.json');
 
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true"
         }));
@@ -216,10 +216,10 @@ describe('buildJsonResults', () => {
     expect(errorSuite.testcase[1].error).toContain("Your test suite must contain at least one test");
   });
 
-  it('should honor templates when test has errors', () => {
+  it('should honor templates when test has errors', async () => {
     const failingTestsReport = require('../__mocks__/failing-compilation.json');
 
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true",
           suiteNameTemplate: "{displayName}-foo",
@@ -229,70 +229,70 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[2].testsuite[2].testcase[0]._attr.name).toEqual('should foo-bar');
   });
 
-  it('should return the proper filepath when titleTemplate is "{filepath}"', () => {
+  it('should return the proper filepath when titleTemplate is "{filepath}"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         titleTemplate: "{filepath}"
       }));
     expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
-  it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
+  it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{filepath}"
       }));
     expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
-  it('should return the proper name from ancestorTitles when suiteNameTemplate is set to "{title}" and usePathForSuiteName is "true"', () => {
+  it('should return the proper name from ancestorTitles when suiteNameTemplate is set to "{title}" and usePathForSuiteName is "true"', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
     expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
-  it('should return the proper name from testFilePath when usePathForSuiteName is "true"; no appDirectory set', () => {
+  it('should return the proper name from testFilePath when usePathForSuiteName is "true"; no appDirectory set', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
     expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
-  it('should return the proper name from testFilePath when usePathForSuiteName is "true"; with appDirectory set', () => {
+  it('should return the proper name from testFilePath when usePathForSuiteName is "true"; with appDirectory set', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/path/to/test',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
     expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('__tests__/foo.test.js');
   });
 
-  it('should return the proper classname when ancestorSeparator is default', () => {
+  it('should return the proper classname when ancestorSeparator is default', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo baz should bar');
   });
 
-  it('should return the proper classname when ancestorSeparator is customized', () => {
+  it('should return the proper classname when ancestorSeparator is customized', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         ancestorSeparator: " › "
       }));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo › baz should bar');
   });
 
-  it('should parse failure messages for failing tests', () => {
+  it('should parse failure messages for failing tests', async () => {
     const failingTestsReport = require('../__mocks__/failing-tests.json');
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
 
     const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
 
@@ -301,9 +301,9 @@ describe('buildJsonResults', () => {
 
   });
 
-  it('should parse messages without stack trace when notStackTrace set to true and jest >= 26.3.0', () => {
+  it('should parse messages without stack trace when notStackTrace set to true and jest >= 26.3.0', async () => {
     const failingTestsReport = require('../__mocks__/failing-tests-with-failure-details.json');
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         noStackTrace: "true"
       }));
@@ -318,9 +318,9 @@ describe('buildJsonResults', () => {
 
   });
 
-  it('should parse messages with stack trace when notStackTrace set to false and jest >= 26.3.0', () => {
+  it('should parse messages with stack trace when notStackTrace set to false and jest >= 26.3.0', async () => {
     const failingTestsReport = require('../__mocks__/failing-tests-with-failure-details.json');
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         noStackTrace: "false"
       }));
@@ -335,9 +335,9 @@ describe('buildJsonResults', () => {
 
   });
 
-  it('should parse failure messages for failing tests and not crash when notStackTrace set to true and jest < 26.3.0', () => {
+  it('should parse failure messages for failing tests and not crash when notStackTrace set to true and jest < 26.3.0', async () => {
     const failingTestsReport = require('../__mocks__/failing-tests.json'); // no failure details
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = await buildJsonResults(failingTestsReport, '/path/to/test',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         noStackTrace: "true"
       }));
@@ -349,14 +349,14 @@ describe('buildJsonResults', () => {
     expect(failureMsg).toMatch('Should fail');
   });
 
-  it('should support displayName template var for jest multi-project', () => {
+  it('should support displayName template var for jest multi-project', async () => {
     const multiProjectNoFailingTestsReport = require('../__mocks__/multi-project-no-failing-tests.json');
 
     // Mock Date.now() to return a fixed later value
     const startDate = new Date(multiProjectNoFailingTestsReport.startTime);
     jest.spyOn(Date, 'now').mockImplementation(() => startDate.getTime() + 1234);
 
-    jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(multiProjectNoFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{displayName}-foo",
         titleTemplate: "{displayName}-bar"
@@ -365,34 +365,34 @@ describe('buildJsonResults', () => {
     expect(jsonResults).toMatchSnapshot();
   });
 
-  it('should not return the file name by default', () => {
+  it('should not return the file name by default', async () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe(undefined);
   });
 
-  it('should return the file name when addFileAttribute is "true"', () => {
+  it('should return the file name when addFileAttribute is "true"', async () => {
     // Ignore junit errors for this attribute
     // It is added for circle-ci and is known to not generate
     // jenkins-compatible junit
     ignoreJunitErrors = true;
 
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         addFileAttribute: "true"
       }));
     expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
-  it('should prefix the file name with filePathPrefix', () => {
+  it('should prefix the file name with filePathPrefix', async () => {
     // Ignore junit errors for this attribute
     // It is added for circle-ci and is known to not generate
     // jenkins-compatible junit
     ignoreJunitErrors = true;
 
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = await buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         addFileAttribute: "true",
         filePathPrefix: "packages/foobar"
@@ -400,9 +400,9 @@ describe('buildJsonResults', () => {
     expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file)).toBe('packages/foobar/path/to/test/__tests__/foo.test.js');
   });
 
-  it('should show output of console if includeConsoleOutput is true', () => {
+  it('should show output of console if includeConsoleOutput is true', async () => {
     const reportWithConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
+    jsonResults = await buildJsonResults(reportWithConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeConsoleOutput: "true"
       }));
@@ -410,9 +410,9 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[3]['system-out']).toBeDefined();
   });
 
-  it('should NOT show output of console if includeConsoleOutput is not set or false', () => {
+  it('should NOT show output of console if includeConsoleOutput is not set or false', async () => {
     const reportWithConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
+    jsonResults = await buildJsonResults(reportWithConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeConsoleOutput: "false"
       }));
@@ -420,9 +420,9 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[1]['system-out']).not.toBeDefined();
   });
 
-  it('should show short console output if includeShortConsoleOutput is true', () => {
+  it('should show short console output if includeShortConsoleOutput is true', async () => {
     const reportWithShortConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
+    jsonResults = await buildJsonResults(reportWithShortConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeShortConsoleOutput: "true"
       }));
@@ -430,9 +430,9 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[3]['system-out']._cdata).toEqual("[\n  \"I am bar\",\n  \"Some output here from a lib\"\n]");
   });
 
-  it('should NOT show short console output if includeShortConsoleOutput is not set or false', () => {
+  it('should NOT show short console output if includeShortConsoleOutput is not set or false', async () => {
     const reportWithShortConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
+    jsonResults = await buildJsonResults(reportWithShortConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeShortConsoleOutput: "false"
       }));
@@ -440,7 +440,7 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[2]['system-out']).not.toBeDefined();
   });
 
-  it("should add properties to testcase (non standard)", () => {
+  it("should add properties to testcase (non standard)", async () => {
     const retriedTestsReport = require("../__mocks__/retried-tests.json");
     // <properties> in <testcase> is not compatible JUnit but can be consumed by some e.g. DataDog
     ignoreJunitErrors = true;
@@ -448,7 +448,7 @@ describe('buildJsonResults', () => {
     const startDate = new Date(retriedTestsReport.startTime);
     jest.spyOn(Date, 'now').mockImplementation(() => startDate.getTime() + 1234);
 
-    jsonResults = buildJsonResults(retriedTestsReport, "/", {
+    jsonResults = await buildJsonResults(retriedTestsReport, "/", {
       ...constants.DEFAULT_OPTIONS,
       testCasePropertiesFile: "junitDataDogInvocationsProperties.js",
     });

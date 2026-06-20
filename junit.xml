@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="53" failures="2" errors="0" time="4.829">
+  <testsuite name="getOptions" errors="0" failures="0" skipped="6" timestamp="2026-06-20T20:18:39" time="1.624" tests="6">
+    <properties>
+      <property name="best-tester" value="Jason Palmer"/>
+    </properties>
+    <testcase classname="getOptions should support package.json in root directory" name="getOptions should support package.json in root directory" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="getUniqueOutputName should return default junit value if given no preferred prefix" name="getUniqueOutputName should return default junit value if given no preferred prefix" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="getUniqueOutputName should return apply custom prefix value if given prefix" name="getUniqueOutputName should return apply custom prefix value if given prefix" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="replace &lt;rootDir&gt; should replace &lt;rootDir&gt; in output path" name="replace &lt;rootDir&gt; should replace &lt;rootDir&gt; in output path" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="replace &lt;rootDir&gt; should not replace when output has no &lt;rootDir&gt;" name="replace &lt;rootDir&gt; should not replace when output has no &lt;rootDir&gt;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="replace &lt;rootDir&gt; should not replace when rootDir is null" name="replace &lt;rootDir&gt; should not replace when rootDir is null" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="getTestSuitePropertiesPath" errors="0" failures="0" skipped="2" timestamp="2026-06-20T20:18:39" time="1.745" tests="2">
+    <properties>
+      <property name="best-tester" value="Jason Palmer"/>
+    </properties>
+    <testcase classname="getTestSuitePropertiesPath should replace &lt;rootDir&gt; in test suite properties path" name="getTestSuitePropertiesPath should replace &lt;rootDir&gt; in test suite properties path" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="getTestSuitePropertiesPath should not replace &lt;rootDir&gt; in test suite properties path when rootDir is not set" name="getTestSuitePropertiesPath should not replace &lt;rootDir&gt; in test suite properties path when rootDir is not set" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="jest-junit" errors="0" failures="0" skipped="5" timestamp="2026-06-20T20:18:39" time="1.856" tests="5">
+    <properties>
+      <property name="best-tester" value="Jason Palmer"/>
+    </properties>
+    <testcase classname="jest-junit should generate valid xml with default name" name="jest-junit should generate valid xml with default name" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="jest-junit should generate valid xml with unique name" name="jest-junit should generate valid xml with unique name" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="jest-junit should generate valid xml despite illegal characters" name="jest-junit should generate valid xml despite illegal characters" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="jest-junit should generate xml at the output filepath defined by JEST_JUNIT_OUTPUT_FILE" name="jest-junit should generate xml at the output filepath defined by JEST_JUNIT_OUTPUT_FILE" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="jest-junit should generate xml at the output filepath defined by outputFile config" name="jest-junit should generate xml at the output filepath defined by outputFile config" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="buildJsonResults" errors="0" failures="0" skipped="38" timestamp="2026-06-20T20:18:39" time="1.543" tests="38">
+    <properties>
+      <property name="best-tester" value="Jason Palmer"/>
+    </properties>
+    <testcase classname="buildJsonResults should contain number of tests in testSuite" name="buildJsonResults should contain number of tests in testSuite" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should contain number of tests in testSuites" name="buildJsonResults should contain number of tests in testSuites" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper name from ancestorTitles when usePathForSuiteName is &quot;false&quot;" name="buildJsonResults should return the proper name from ancestorTitles when usePathForSuiteName is &quot;false&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper filename when suiteNameTemplate is &quot;{filename}&quot;" name="buildJsonResults should return the proper filename when suiteNameTemplate is &quot;{filename}&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should support suiteNameTemplate as function" name="buildJsonResults should support suiteNameTemplate as function" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper classname when classNameTemplate is &quot;{classname}&quot;" name="buildJsonResults should return the proper classname when classNameTemplate is &quot;{classname}&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper title when classNameTemplate is &quot;{title}&quot;" name="buildJsonResults should return the proper title when classNameTemplate is &quot;{title}&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper filepath when classNameTemplate is &quot;{filepath}&quot;" name="buildJsonResults should return the proper filepath when classNameTemplate is &quot;{filepath}&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper filename when classNameTemplate is &quot;{filename}&quot;" name="buildJsonResults should return the proper filename when classNameTemplate is &quot;{filename}&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper displayName when classNameTemplate is Unit Tests" name="buildJsonResults should return the proper displayName when classNameTemplate is Unit Tests" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper suitename when classNameTemplate is &quot;{suitename}&quot;" name="buildJsonResults should return the proper suitename when classNameTemplate is &quot;{suitename}&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should support return the function result when classNameTemplate is a function" name="buildJsonResults should support return the function result when classNameTemplate is a function" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should report no results as error" name="buildJsonResults should report no results as error" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should report failureMessage if testExecErrorNotSet" name="buildJsonResults should report failureMessage if testExecErrorNotSet" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should include a failing testcase from a suite with passing testcases but a failure from &quot;testExecError&quot; " name="buildJsonResults should include a failing testcase from a suite with passing testcases but a failure from &quot;testExecError&quot; " time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should not include a failing testcase from a suite with passing testcases but a null value from &quot;testExecError&quot; " name="buildJsonResults should not include a failing testcase from a suite with passing testcases but a null value from &quot;testExecError&quot; " time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should report empty suites as error" name="buildJsonResults should report empty suites as error" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should honor templates when test has errors" name="buildJsonResults should honor templates when test has errors" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper filepath when titleTemplate is &quot;{filepath}&quot;" name="buildJsonResults should return the proper filepath when titleTemplate is &quot;{filepath}&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper filepath when suiteNameTemplate is &quot;{filepath}&quot; and usePathForSuiteName is &quot;false&quot;" name="buildJsonResults should return the proper filepath when suiteNameTemplate is &quot;{filepath}&quot; and usePathForSuiteName is &quot;false&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper name from ancestorTitles when suiteNameTemplate is set to &quot;{title}&quot; and usePathForSuiteName is &quot;true&quot;" name="buildJsonResults should return the proper name from ancestorTitles when suiteNameTemplate is set to &quot;{title}&quot; and usePathForSuiteName is &quot;true&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper name from testFilePath when usePathForSuiteName is &quot;true&quot;; no appDirectory set" name="buildJsonResults should return the proper name from testFilePath when usePathForSuiteName is &quot;true&quot;; no appDirectory set" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper name from testFilePath when usePathForSuiteName is &quot;true&quot;; with appDirectory set" name="buildJsonResults should return the proper name from testFilePath when usePathForSuiteName is &quot;true&quot;; with appDirectory set" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper classname when ancestorSeparator is default" name="buildJsonResults should return the proper classname when ancestorSeparator is default" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the proper classname when ancestorSeparator is customized" name="buildJsonResults should return the proper classname when ancestorSeparator is customized" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should parse failure messages for failing tests" name="buildJsonResults should parse failure messages for failing tests" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should parse messages without stack trace when notStackTrace set to true and jest &gt;= 26.3.0" name="buildJsonResults should parse messages without stack trace when notStackTrace set to true and jest &gt;= 26.3.0" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should parse messages with stack trace when notStackTrace set to false and jest &gt;= 26.3.0" name="buildJsonResults should parse messages with stack trace when notStackTrace set to false and jest &gt;= 26.3.0" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should parse failure messages for failing tests and not crash when notStackTrace set to true and jest &lt; 26.3.0" name="buildJsonResults should parse failure messages for failing tests and not crash when notStackTrace set to true and jest &lt; 26.3.0" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should support displayName template var for jest multi-project" name="buildJsonResults should support displayName template var for jest multi-project" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should not return the file name by default" name="buildJsonResults should not return the file name by default" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should return the file name when addFileAttribute is &quot;true&quot;" name="buildJsonResults should return the file name when addFileAttribute is &quot;true&quot;" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should prefix the file name with filePathPrefix" name="buildJsonResults should prefix the file name with filePathPrefix" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should show output of console if includeConsoleOutput is true" name="buildJsonResults should show output of console if includeConsoleOutput is true" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should NOT show output of console if includeConsoleOutput is not set or false" name="buildJsonResults should NOT show output of console if includeConsoleOutput is not set or false" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should show short console output if includeShortConsoleOutput is true" name="buildJsonResults should show short console output if includeShortConsoleOutput is true" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should NOT show short console output if includeShortConsoleOutput is not set or false" name="buildJsonResults should NOT show short console output if includeShortConsoleOutput is not set or false" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="buildJsonResults should add properties to testcase (non standard)" name="buildJsonResults should add properties to testcase (non standard)" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="quick suite" errors="0" failures="2" skipped="0" timestamp="2026-06-20T20:18:39" time="2.758" tests="2">
+    <properties>
+      <property name="best-tester" value="Jason Palmer"/>
+    </properties>
+    <testcase classname="quick suite should pass" name="quick suite should pass" time="0.015">
+      <failure>RuntimeError: Aborted(Assertion failed)
+    at abort (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:675:11)
+    at assert (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:383:5)
+    at stringToAscii (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:3950:9)
+    at C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:3962:9
+    at Array.forEach (&lt;anonymous&gt;)
+    at _environ_get (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:3959:23)
+    at null.&lt;anonymous&gt; (wasm://wasm/0034295a:1:121619)
+    at null.&lt;anonymous&gt; (wasm://wasm/0034295a:1:4414)
+    at callRuntimeCallbacks (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:950:26)
+    at initRuntime (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:520:3)
+    at doRun (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:4933:5)
+    at run (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:4953:5)
+    at runCaller (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:4896:19)
+    at removeRunDependency (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:642:7)
+    at receiveInstance (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:791:5)
+    at receiveInstantiationResult (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:809:5)</failure>
+    </testcase>
+    <testcase classname="quick suite should fail" name="quick suite should fail" time="0">
+      <failure>RuntimeError: Aborted(Assertion failed)
+    at abort (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:675:11)
+    at assert (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:383:5)
+    at stringToAscii (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:3950:9)
+    at C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:3962:9
+    at Array.forEach (&lt;anonymous&gt;)
+    at _environ_get (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:3959:23)
+    at null.&lt;anonymous&gt; (wasm://wasm/0034295a:1:121619)
+    at null.&lt;anonymous&gt; (wasm://wasm/0034295a:1:4414)
+    at callRuntimeCallbacks (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:950:26)
+    at initRuntime (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:520:3)
+    at doRun (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:4933:5)
+    at run (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:4953:5)
+    at runCaller (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:4896:19)
+    at removeRunDependency (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:642:7)
+    at receiveInstance (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:791:5)
+    at receiveInstantiationResult (C:\Users\白东鑫\work01\SoloCoder\6049-jest-junit\node_modules\libxml2-wasm\lib\libxml2raw.cjs:809:5)</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

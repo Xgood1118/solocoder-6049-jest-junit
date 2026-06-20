@@ -6,62 +6,106 @@ const fs = require('fs');
 const path = require('path');
 
 const buildJsonResults = require('./utils/buildJsonResults');
+const buildHtmlResults = require('./utils/buildHtmlResults');
 const getOptions = require('./utils/getOptions');
 const getOutputPath = require('./utils/getOutputPath');
+const { getOutputPathForFormat, getOutputFormats } = require('./utils/getOutputPath');
 
-// Store console results from onTestResult to later
-// append to result
 const consoleBuffer = {};
 
+function handleFileError(error, filePath, operation) {
+  if (error.code === 'ENOENT') {
+    process.stderr.write(
+      `jest-junit: ${operation} failed: file not found at ${filePath} (ENOENT)\n`
+    );
+  } else if (error.code === 'EACCES') {
+    process.stderr.write(
+      `jest-junit: ${operation} failed: permission denied at ${filePath} (EACCES)\n`
+    );
+  } else {
+    process.stderr.write(
+      `jest-junit: ${operation} failed at ${filePath}: ${error.message}\n`
+    );
+  }
+}
+
+async function ensureDir(dirPath, dryRun) {
+  if (dryRun) {
+    return;
+  }
+  try {
+    await mkdir(dirPath, { recursive: true });
+  } catch (err) {
+    handleFileError(err, dirPath, 'mkdir');
+  }
+}
+
+function writeFileSafe(filePath, content, dryRun) {
+  if (dryRun) {
+    process.stderr.write(`jest-junit: dry run - would write ${filePath}\n`);
+    return;
+  }
+  try {
+    fs.writeFileSync(filePath, content);
+  } catch (err) {
+    handleFileError(err, filePath, 'write');
+  }
+}
+
 const processor = async (report, reporterOptions = {}, jestRootDir = null) => {
-  // If jest-junit is used as a reporter allow for reporter options
-  // to be used. Env and package.json will override.
   const options = getOptions.options(reporterOptions);
 
   report.testResults.forEach((t, i) => {
     t.console = consoleBuffer[t.testFilePath];
   });
 
-  const jsonResults = buildJsonResults(
-    report,
-    fs.realpathSync(process.cwd()),
-    options,
-    jestRootDir
-  );
+  const appDirectory = fs.realpathSync(process.cwd());
+  const formats = getOutputFormats(options);
+  const dryRun = options._dryRun || options.dryRun === 'true';
 
-  let outputPath = await getOutputPath(options, jestRootDir);
+  let jsonResults = null;
+  let htmlResults = null;
 
-  // Ensure output path exists
-  await mkdir(path.dirname(outputPath), { recursive: true });
+  if (formats.includes('junit')) {
+    jsonResults = await buildJsonResults(
+      report,
+      appDirectory,
+      options,
+      jestRootDir
+    );
+  }
 
-  // Write data to file
-  fs.writeFileSync(outputPath, xml(jsonResults, { indent: '  ', declaration: true }));
+  if (formats.includes('html')) {
+    htmlResults = await buildHtmlResults(
+      report,
+      appDirectory,
+      options,
+      jestRootDir
+    );
+  }
 
-  // Jest 18 compatibility
+  let dirCreated = false;
+
+  for (const format of formats) {
+    const outputPath = await getOutputPathForFormat(options, jestRootDir, format);
+
+    if (!dirCreated) {
+      await ensureDir(path.dirname(outputPath), dryRun);
+      dirCreated = true;
+    }
+
+    if (format === 'junit' && jsonResults) {
+      const xmlContent = xml(jsonResults, { indent: '  ', declaration: true });
+      writeFileSafe(outputPath, xmlContent, dryRun);
+    } else if (format === 'html' && htmlResults) {
+      writeFileSafe(outputPath, htmlResults, dryRun);
+    }
+  }
+
   return report;
 };
 
-/*
-  At the end of ALL of the test suites this method is called
-  It's responsible for generating a single junit.xml file which
-  Represents the status of the test runs
-
-  Expected input and workflow documentation here:
-  https://jestjs.io/docs/en/configuration#testresultsprocessor-string
-
-  Intended output (junit XML) documentation here:
-  http://help.catchsoftware.com/display/ET/JUnit+Format
-*/
-
-// This is an old school "class" in order
-// for the constructor to be invoked statically and via "new"
-// so we can support both testResultsProcessor and reporters
-// TODO: refactor to es6 class after testResultsProcessor support is removed
 function JestJUnit (globalConfig, options) {
-  // See if constructor was invoked statically
-  // which indicates jest-junit was invoked as a testResultsProcessor
-  // and show deprecation warning
-
   if (globalConfig.hasOwnProperty('testResults')) {
     const newConfig = JSON.stringify({
       reporters: ['jest-junit']

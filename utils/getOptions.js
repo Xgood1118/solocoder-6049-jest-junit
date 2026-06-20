@@ -30,10 +30,8 @@ function getEnvOptions() {
 function getAppOptions(pathToResolve) {
   let traversing = true;
 
-  // Get the root dir to detect when we reached the end to our search
   const rootDir = path.parse(pathToResolve).root
 
-  // Find nearest package.json by traversing up directories until root
   while(traversing) {
     traversing = pathToResolve !== rootDir;
 
@@ -71,12 +69,89 @@ async function getUniqueOutputName(outputName) {
   return `${outputPrefix}-${v1()}.xml`
 }
 
+function getUniqueOutputNameForFormat(outputName, format) {
+  const baseName = outputName.replace(/\.[^.]+$/, '');
+  const ext = format === 'html' ? 'html' : 'xml';
+  return `${baseName}.${ext}`;
+}
+
+function mergeOptionsWithSources(reporterOptions, appOptions, envOptions) {
+  const sources = {
+    defaults: Object.keys(constants.DEFAULT_OPTIONS),
+    reporter: Object.keys(reporterOptions),
+    packageJson: Object.keys(appOptions),
+    env: Object.keys(envOptions),
+  };
+
+  const effective = Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, appOptions, envOptions);
+
+  const sourceMap = {};
+  for (const key of Object.keys(effective)) {
+    if (envOptions.hasOwnProperty(key)) {
+      sourceMap[key] = 'env';
+    } else if (appOptions.hasOwnProperty(key)) {
+      sourceMap[key] = 'package.json';
+    } else if (reporterOptions.hasOwnProperty(key)) {
+      sourceMap[key] = 'reporter options';
+    } else {
+      sourceMap[key] = 'default';
+    }
+  }
+
+  const explicitlySet = {
+    reporter: new Set(Object.keys(reporterOptions)),
+    packageJson: new Set(Object.keys(appOptions)),
+    env: new Set(Object.keys(envOptions)),
+  };
+
+  const isExplicitlySet = (key) => {
+    return explicitlySet.reporter.has(key) ||
+           explicitlySet.packageJson.has(key) ||
+           explicitlySet.env.has(key);
+  };
+
+  return { effective, sourceMap, isExplicitlySet, sources };
+}
+
+function printEffectiveConfig(effective, sourceMap) {
+  const lines = ['jest-junit effective config (dry run):'];
+  const keys = Object.keys(effective)
+    .filter(key => !key.startsWith('_'))
+    .sort();
+  for (const key of keys) {
+    const source = sourceMap[key] || 'unknown';
+    const value = effective[key];
+    const displayValue = typeof value === 'string' ? value : JSON.stringify(value);
+    lines.push(`  ${key} = ${displayValue}  (source: ${source})`);
+  }
+  process.stderr.write(lines.join('\n') + '\n');
+}
+
 module.exports = {
   options: (reporterOptions = {}) => {
-    return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
+    const appOptions = getAppOptions(process.cwd());
+    const envOptions = getEnvOptions();
+    const { effective, sourceMap, isExplicitlySet } = mergeOptionsWithSources(
+      reporterOptions,
+      appOptions,
+      envOptions
+    );
+
+    effective._sourceMap = sourceMap;
+    effective._isExplicitlySet = isExplicitlySet;
+    effective._dryRun = effective.dryRun === 'true';
+
+    if (effective._dryRun) {
+      printEffectiveConfig(effective, sourceMap);
+    }
+
+    return effective;
   },
   getAppOptions: getAppOptions,
   getEnvOptions: getEnvOptions,
   replaceRootDirInOutput: replaceRootDirInOutput,
-  getUniqueOutputName: getUniqueOutputName
+  getUniqueOutputName: getUniqueOutputName,
+  getUniqueOutputNameForFormat: getUniqueOutputNameForFormat,
+  mergeOptionsWithSources: mergeOptionsWithSources,
+  printEffectiveConfig: printEffectiveConfig,
 };
