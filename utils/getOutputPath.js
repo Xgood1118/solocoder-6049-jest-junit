@@ -3,7 +3,10 @@ const getOptions = require('./getOptions');
 
 function replaceExtension(filePath, format) {
   const ext = format === 'html' ? '.html' : '.xml';
-  return filePath.replace(/\.[^.]+$/, ext);
+  if (/\.(xml|html)$/i.test(filePath)) {
+    return filePath.replace(/\.(xml|html)$/i, ext);
+  }
+  return filePath + ext;
 }
 
 async function getBaseOutputPath(options, jestRootDir) {

@@ -126,7 +126,8 @@ async function buildTestCaseHtml(junitOptions, suiteOptions, tc, filepath, filen
       const messagesHtml = failureMessages
         .map(msg => `<pre>${escapeHtml(stripAnsiKeepNewlines(msg))}</pre>`)
         .join('');
-      failureDetailsHtml = `<div class="failure-details">${messagesHtml}</div>`;
+      const count = failureMessages.length > 1 ? ` (${failureMessages.length})` : '';
+      failureDetailsHtml = `<details class="failure-details" open><summary>Failure details${count}</summary>${messagesHtml}</details>`;
     }
   }
 

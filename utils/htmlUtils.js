@@ -22,12 +22,26 @@ function isPrimitive(value) {
   return value === null || value === undefined || type === 'string' || type === 'number' || type === 'boolean';
 }
 
+function jsonReplacer(key, value) {
+  if (typeof value === 'function') {
+    try {
+      return '[Function: ' + (value.name || 'anonymous') + ']' + '\n' + value.toString();
+    } catch (e) {
+      return '[Function: ' + (value.name || 'anonymous') + ']';
+    }
+  }
+  return value;
+}
+
 function serializePropertyValue(value) {
   if (isPrimitive(value)) {
     return String(value);
   }
   try {
-    return JSON.stringify(value);
+    if (typeof value === 'function') {
+      return jsonReplacer('', value);
+    }
+    return JSON.stringify(value, jsonReplacer);
   } catch (e) {
     return String(value);
   }
@@ -82,9 +96,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .badge.failed { background: #ffebee; color: #c62828; }
 .badge.skipped { background: #fff3e0; color: #e65100; }
 .testcase-time { color: #999; }
-.failure-details { margin-top: 10px; background: #fff3f3; border-left: 3px solid #d32f2f; padding: 12px; border-radius: 0 4px 4px 0; display: none; }
-.testcase.failed .failure-details { display: block; }
-.failure-details pre { white-space: pre-wrap; word-break: break-word; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #c62828; line-height: 1.5; }
+.failure-details { margin-top: 10px; background: #fff3f3; border-left: 3px solid #d32f2f; padding: 8px 12px; border-radius: 0 4px 4px 0; }
+.failure-details summary { cursor: pointer; font-size: 12px; color: #c62828; font-weight: 600; padding: 4px 0; }
+.failure-details pre { white-space: pre-wrap; word-break: break-word; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #c62828; line-height: 1.5; margin-top: 8px; }
 .toggle-icon { display: inline-block; transition: transform 0.2s; margin-right: 8px; }
 .suite.open .toggle-icon { transform: rotate(90deg); }
 .system-out { margin: 10px 0; background: #f5f5f5; border-left: 3px solid #999; padding: 12px; border-radius: 0 4px 4px 0; }
@@ -181,6 +195,7 @@ module.exports = {
   escapeHtml,
   stripAnsiKeepNewlines,
   isPrimitive,
+  jsonReplacer,
   serializePropertyValue,
   isSerializableForDataAttr,
   buildHtmlTemplate,
